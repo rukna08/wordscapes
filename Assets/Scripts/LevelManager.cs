@@ -15,8 +15,12 @@ public class LevelManager : MonoBehaviour {
     #region PRIVATE VARIABLES
     
     private bool[] levelTextsSecretValues;
-    
+
+    private static int score;
+
     #endregion
+
+    #region START & UPDATE
 
     void Start() {
         levelTextsSecretValues = new bool[level_texts.Length];
@@ -25,20 +29,35 @@ public class LevelManager : MonoBehaviour {
     }
 
     void Update() {
-        for(int i = 0; i < level_texts.Length; i++) {
-            if(inputField.text == level_texts[i] && Input.GetKeyDown(KeyCode.Return)) {
-                SetHiddenTextToDisplayText(i);
-                SetSecretValueToTrue(i);
-                inputField.text = "";
+        bool found = false;
+
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            for (int i = 0; i < level_texts.Length; i++) {
+                if (inputField.text == level_texts[i]) {
+                    SetHiddenTextToDisplayText(i);
+                    SetSecretValueToTrue(i);
+                    inputField.text = "";
+                    
+                    found = true;
+                }
             }
+
+            if (found) {
+                score++;
+            } else {
+                score--;
+            }
+
+            Debug.Log(score);
         }
 
         if(CheckIfSecretValuesAreTrue()) {
-            Debug.Log("You win!");
-
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("Next scene loaded!");
         }
     }
+
+    #endregion
 
     #region FUNCTIONS
 
