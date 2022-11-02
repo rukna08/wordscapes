@@ -923,7 +923,7 @@ MonoBehaviour:
   - {fileID: 1736521606}
   - {fileID: 2033459453}
   inputField: {fileID: 1006289559}
-  scoreTextActual: {fileID: 0}
+  scoreTextActual: {fileID: 120167636}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
