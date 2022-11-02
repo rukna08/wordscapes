@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
     
@@ -16,8 +17,8 @@ public class LevelManager : MonoBehaviour {
     #region PRIVATE VARIABLES
     
     private bool[] levelTextsSecretValues;
-
     private static int score;
+    private static List<string> unlockedTexts;
 
     #endregion
 
@@ -25,10 +26,9 @@ public class LevelManager : MonoBehaviour {
 
     void Start() {
         levelTextsSecretValues = new bool[level_texts.Length];
-
         SetSecretValueToFalse();
-
         scoreTextActual.SetText(score.ToString());
+        unlockedTexts = new List<string>();
     }
 
     void Update() {
@@ -36,12 +36,14 @@ public class LevelManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Return)) {
             for (int i = 0; i < level_texts.Length; i++) {
-                if (inputField.text == level_texts[i]) {
+                if (inputField.text == level_texts[i] && !unlockedTexts.Contains(level_texts[i])) {
                     SetHiddenTextToDisplayText(i);
                     SetSecretValueToTrue(i);
                     inputField.text = "";
                     
                     found = true;
+
+                    unlockedTexts.Add(level_texts[i]);
                 }
             }
 
