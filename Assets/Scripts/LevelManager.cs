@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
     
@@ -33,6 +34,8 @@ public class LevelManager : MonoBehaviour {
 
         if(CheckIfSecretValuesAreTrue()) {
             Debug.Log("You win!");
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
