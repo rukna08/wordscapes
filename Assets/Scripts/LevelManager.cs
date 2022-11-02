@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour {
     public string[] level_texts;
     public TextMeshProUGUI[] toBeDisplayedTexts;
     public TMP_InputField inputField;
+    public TextMeshProUGUI scoreTextActual;
     
     #endregion
 
@@ -26,6 +27,8 @@ public class LevelManager : MonoBehaviour {
         levelTextsSecretValues = new bool[level_texts.Length];
 
         SetSecretValueToFalse();
+
+        scoreTextActual.SetText(score.ToString());
     }
 
     void Update() {
@@ -48,7 +51,7 @@ public class LevelManager : MonoBehaviour {
                 score--;
             }
 
-            Debug.Log(score);
+            scoreTextActual.SetText(score.ToString());
         }
 
         if(CheckIfSecretValuesAreTrue()) {
