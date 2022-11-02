@@ -26,9 +26,10 @@ public class LevelManager : MonoBehaviour {
 
     void Update() {
         for(int i = 0; i < level_texts.Length; i++) {
-            if(inputField.text == level_texts[i]) {
+            if(inputField.text == level_texts[i] && Input.GetKeyDown(KeyCode.Return)) {
                 SetHiddenTextToDisplayText(i);
                 SetSecretValueToTrue(i);
+                inputField.text = "";
             }
         }
 
