@@ -25,41 +25,13 @@ public class LevelManager : MonoBehaviour {
     #region START & UPDATE
 
     void Start() {
-        levelTextsSecretValues = new bool[level_texts.Length];
-        SetSecretValueToFalse();
-        scoreTextActual.SetText(score.ToString());
-        unlockedTexts = new List<string>();
+        Init();
     }
 
     void Update() {
-        bool found = false;
+        UnlockIfEnterKeyPressedAndDisplayScore();
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            for (int i = 0; i < level_texts.Length; i++) {
-                if (inputField.text == level_texts[i] && !unlockedTexts.Contains(level_texts[i])) {
-                    SetHiddenTextToDisplayText(i);
-                    SetSecretValueToTrue(i);
-                    inputField.text = "";
-                    
-                    found = true;
-
-                    unlockedTexts.Add(level_texts[i]);
-                }
-            }
-
-            if (found) {
-                score++;
-            } else {
-                score--;
-            }
-
-            scoreTextActual.SetText(score.ToString());
-        }
-
-        if(CheckIfSecretValuesAreTrue()) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            Debug.Log("Next scene loaded!");
-        }
+        LoadNextScene();
     }
 
     #endregion
@@ -86,10 +58,49 @@ public class LevelManager : MonoBehaviour {
                 return false;
             }
         }
-
         return true;
     }
 
+    void Init() {
+        levelTextsSecretValues = new bool[level_texts.Length];
+        SetSecretValueToFalse();
+        scoreTextActual.SetText(score.ToString());
+        unlockedTexts = new List<string>();
+    }
+
+    void UnlockIfEnterKeyPressedAndDisplayScore() {
+        bool found = false;
+
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            for (int i = 0; i < level_texts.Length; i++) {
+                if (inputField.text == level_texts[i] && !unlockedTexts.Contains(level_texts[i])) {
+                    SetHiddenTextToDisplayText(i);
+                    SetSecretValueToTrue(i);
+                    inputField.text = "";
+
+                    found = true;
+
+                    unlockedTexts.Add(level_texts[i]);
+                }
+            }
+
+            if (found) {
+                score++;
+            } else {
+                score--;
+            }
+
+            scoreTextActual.SetText(score.ToString());
+        }
+    }
+
+    void LoadNextScene() {
+        if (CheckIfSecretValuesAreTrue()) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("Next scene loaded!");
+        }
+    }
+
     #endregion
-    
+
 }
