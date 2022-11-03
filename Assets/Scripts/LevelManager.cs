@@ -95,11 +95,15 @@ public class LevelManager : MonoBehaviour {
     }
 
     void LoadNextScene() {
-        if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 11) {
+        if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 12) {
             Debug.Log("Game over, you win!");
-            
-            SceneManager.LoadScene("levelgameover");
 
+            if (score > 0) {
+                SceneManager.LoadScene("levelgameovernice");
+            } else {
+                SceneManager.LoadScene("levelgameoveroffensive");
+            }
+            
             return;
         }
 
