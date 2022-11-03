@@ -95,6 +95,14 @@ public class LevelManager : MonoBehaviour {
     }
 
     void LoadNextScene() {
+        if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 11) {
+            Debug.Log("Game over, you win!");
+            
+            SceneManager.LoadScene("levelgameover");
+
+            return;
+        }
+
         if (CheckIfSecretValuesAreTrue()) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("Next scene loaded!");
