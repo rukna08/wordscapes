@@ -1,3 +1,5 @@
+using System.IO;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +13,7 @@ public class LevelManager : MonoBehaviour {
     public TextMeshProUGUI[] toBeDisplayedTexts;
     public TMP_InputField inputField;
     public TextMeshProUGUI scoreTextActual;
+    public GameObject nextLevelButton;
     
     #endregion
 
@@ -19,6 +22,7 @@ public class LevelManager : MonoBehaviour {
     private bool[] levelTextsSecretValues;
     private static int score;
     private static List<string> unlockedTexts;
+    private BinaryWriter binaryWriter;
 
     #endregion
 
@@ -98,6 +102,8 @@ public class LevelManager : MonoBehaviour {
 
     void LoadNextScene() {
         if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 10) {
+            OutputScoreToBinaryFile();
+
             if (score > 0) {
                 SceneManager.LoadScene("levelgameovernice");
             } else {
@@ -119,6 +125,23 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    #endregion
+    public void LoadNextSceneByNextButtonNegativeTen() {
+        score -= 10;
 
+        SetAllSecretValuesToTrue();
+    }
+
+    void SetAllSecretValuesToTrue() {
+        for (int i = 0; i < levelTextsSecretValues.Length; i++) {
+            levelTextsSecretValues[i] = true;
+        }
+    }
+
+    void OutputScoreToBinaryFile() {
+        binaryWriter = new BinaryWriter(new FileStream("scoredata", FileMode.Create));
+        binaryWriter.Write(score);
+        binaryWriter.Close();
+    }
+
+    #endregion
 }
