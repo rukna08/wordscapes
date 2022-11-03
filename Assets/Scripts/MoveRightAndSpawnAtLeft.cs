@@ -5,7 +5,7 @@ public class MoveRightAndSpawnAtLeft : MonoBehaviour {
         transform.position += new Vector3(.5f, 0f, 0f);
 
         if (transform.position.x > Screen.width + 250) {
-            transform.position = new Vector2(0f, transform.position.y);
+            transform.position = new Vector2(-250f, transform.position.y);
         }
     }
 
