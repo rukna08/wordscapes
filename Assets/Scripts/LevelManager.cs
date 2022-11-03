@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour {
         UnlockIfEnterKeyPressedAndDisplayScore();
 
         LoadNextScene();
+
+        PressEscToQuit();
     }
 
     #endregion
@@ -95,9 +97,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     void LoadNextScene() {
-        if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 12) {
-            Debug.Log("Game over, you win!");
-
+        if (CheckIfSecretValuesAreTrue() && SceneManager.GetActiveScene().buildIndex == 10) {
             if (score > 0) {
                 SceneManager.LoadScene("levelgameovernice");
             } else {
@@ -110,6 +110,12 @@ public class LevelManager : MonoBehaviour {
         if (CheckIfSecretValuesAreTrue()) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("Next scene loaded!");
+        }
+    }
+
+    void PressEscToQuit() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
         }
     }
 
